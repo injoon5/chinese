@@ -32,7 +32,7 @@ export function FlashcardMode({ words, userId, onExit }: FlashcardModeProps) {
   const [wrongWords, setWrongWords] = useState<Word[]>([]);
 
   const current = deck[index];
-  const progress = deck.length > 0 ? (index / deck.length) * 100 : 0;
+  const progress = deck.length > 0 ? ((index + 1) / deck.length) * 100 : 0;
 
   const recordResult = async (correct: boolean) => {
     const newResult = { wordId: current.id, correct };
@@ -55,7 +55,8 @@ export function FlashcardMode({ words, userId, onExit }: FlashcardModeProps) {
 
     if (index + 1 >= deck.length) {
       const allResults = [...results, newResult];
-      const wrong = deck.filter((_, i) => allResults[i] && !allResults[i].correct);
+      const wrongIds = new Set(allResults.filter((r) => !r.correct).map((r) => r.wordId));
+      const wrong = deck.filter((w) => wrongIds.has(w.id));
       setWrongWords(wrong);
       setDone(true);
     } else {

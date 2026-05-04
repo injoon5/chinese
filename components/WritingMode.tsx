@@ -38,7 +38,7 @@ export function WritingMode({ words, userId, onExit }: WritingModeProps) {
   const [done, setDone] = useState(false);
 
   const current = deck[index];
-  const progress = deck.length > 0 ? (index / deck.length) * 100 : 0;
+  const progress = deck.length > 0 ? ((index + 1) / deck.length) * 100 : 0;
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
